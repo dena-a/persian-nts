@@ -125,46 +125,49 @@ class PersianNTS
         $bundles = array_reverse(str_split(strrev(strval($tmp_number)), 3));
         foreach ($bundles as $bundle_key => $bundle) {
             $tmp_bundle_number = strrev($bundle);
-            $digits = str_split(strrev($bundle));
-            foreach ($digits as $key => $digit) {
-                $digit_num = $key + 1;
+            if (intval($tmp_bundle_number)) {
+                $digits = str_split(strrev($bundle));
+                foreach ($digits as $key => $digit) {
+                    $digit_num = $key + 1;
 
-                $digit = intval($digit);
-                if (!$digit) {
-                    continue;
-                }              
-
-                switch (true) {
-                    case (((count($digits) == 2 && $digit_num == 1) || (count($digits) == 3 && $digit_num == 2)) &&
-                          ($tmp_bundle_number % 100 < 20 && $tmp_bundle_number % 100 >= 10)):
-                        $tmp_digit = $tmp_bundle_number % 100;
-                        if ($digit_num == 2) {
-                            $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$tmp_digit}.mp3");
-                        }
-                        break;
-                    case (((count($digits) == 1 && $digit_num == 1) ||
-                          (count($digits) == 2 && $digit_num == 2) ||
-                          (count($digits) == 3 && $digit_num == 3)) &&
-                          ($tmp_bundle_number % 100 >= 20 || $tmp_bundle_number % 100 < 10)):
-                        $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$digit}.mp3");
-                        break;
-                    case ((count($digits) == 2 && $digit_num == 1) ||
-                          (count($digits) == 3 && $digit_num == 2)):
-                        if ($tmp_bundle_number % 10 == 0) {
-                            $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$digit}0.mp3");
-                        } else {
-                            $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$digit}0-continues.mp3");
-                        }
-                        break;
-                    case (count($digits) == 3 && $digit_num == 1):
-                        if ($tmp_bundle_number % 100 == 0) {
-                            $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$digit}00.mp3");
-                        } else {
-                            $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$digit}00-continues.mp3");
-                        }
-                        break;
+                    $digit = intval($digit);
+                    if (!$digit) {
+                        continue;
+                    }
+    
+                    switch (true) {
+                        case (((count($digits) == 2 && $digit_num == 1) || (count($digits) == 3 && $digit_num == 2)) &&
+                              ($tmp_bundle_number % 100 < 20 && $tmp_bundle_number % 100 >= 10)):
+                            $tmp_digit = $tmp_bundle_number % 100;
+                            if ((count($digits) == 2 && $digit_num == 1) || (count($digits) == 3 && $digit_num == 2)) {
+                                $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$tmp_digit}.mp3");
+                            }
+                            break;
+                        case (((count($digits) == 1 && $digit_num == 1) ||
+                              (count($digits) == 2 && $digit_num == 2) ||
+                              (count($digits) == 3 && $digit_num == 3)) &&
+                              ($tmp_bundle_number % 100 >= 20 || $tmp_bundle_number % 100 < 10)):
+                            $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$digit}.mp3");
+                            break;
+                        case ((count($digits) == 2 && $digit_num == 1) ||
+                              (count($digits) == 3 && $digit_num == 2)):
+                            if ($tmp_bundle_number % 10 == 0) {
+                                $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$digit}0.mp3");
+                            } else {
+                                $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$digit}0-continues.mp3");
+                            }
+                            break;
+                        case (count($digits) == 3 && $digit_num == 1):
+                            if ($tmp_bundle_number % 100 == 0) {
+                                $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$digit}00.mp3");
+                            } else {
+                                $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__."/../resources/sounds/numbers/{$digit}00-continues.mp3");
+                            }
+                            break;
+                    }
                 }
             }
+            
 
             if (intval($bundle) == 0) {
                 continue;
