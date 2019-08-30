@@ -378,6 +378,8 @@ class PHPMP3
     public function mergeInfront(self $mp3)
     {
         $this->str = $mp3->str . $this->str;
+
+        return $this;
     }
 
     /**

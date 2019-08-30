@@ -15,4 +15,9 @@ class MP3Helper
     {
         return $primary->mergeBehind(new PHPMP3($merge))->striptags();
     }
+    
+    public static function mergeInfront(PHPMP3 $primary, string $merge):  PHPMP3
+    {
+        return $primary->mergeInfront(new PHPMP3($merge))->striptags();
+    }
 }

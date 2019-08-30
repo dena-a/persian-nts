@@ -53,7 +53,7 @@ class PersianNTS
 
         $this->audio_contents = MP3Helper::empty();
 
-        $this->savepath = __DIR__.'/../resources/sounds/temp.mp3';
+        $this->savepath = storage_path('app/public/temp.mp3');
     }
 
     /**
@@ -67,6 +67,30 @@ class PersianNTS
         $this->number = $number;
 
         return $this;
+    }
+
+    /**
+     * Set Audio Contents function
+     *
+     * @param string $audio_contents
+     * @return void
+     */
+    public function setAudioContents(string $audio_contents)
+    {
+        $this->audio_contents = $audio_contents;
+
+        return $this;
+    }
+
+    /**
+     * Get Audio Contents function
+     *
+     * @param string $audio_contents
+     * @return void
+     */
+    public function getAudioContents()
+    {
+        return $this->audio_contents;
     }
 
     /**
@@ -215,6 +239,32 @@ class PersianNTS
         } elseif ($this->currency === self::TOMAN) {
             $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, __DIR__.'/../resources/sounds/currencies/toman.mp3');
         }
+    }
+
+    /**
+     * Merge Behind function
+     *
+     * @param string $audio_path
+     * @return void
+     */
+    public function mergeBehind(string $audio_path)
+    {
+        $this->audio_contents = MP3Helper::mergeBehind($this->audio_contents, $audio_path);
+
+        return $this;
+    }
+
+    /**
+     * Merge Infront function
+     *
+     * @param string $audio_path
+     * @return void
+     */
+    public function mergeInfront(string $audio_path)
+    {
+        $this->audio_contents = MP3Helper::mergeInfront($this->audio_contents, $audio_path);
+
+        return $this;
     }
     
     /**
